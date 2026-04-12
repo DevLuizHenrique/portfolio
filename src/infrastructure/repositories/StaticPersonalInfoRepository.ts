@@ -10,8 +10,11 @@ const PERSONAL_INFO: PersonalInfo = {
     "Quando não estou codificando, estou explorando novas tecnologias, contribuindo para projetos open source ou ensinando outros a descobrirem sua própria magia no desenvolvimento.",
   ],
   socialLinks: [
-    { label: "GitHub", href: "#" },
-    { label: "LinkedIn", href: "#" },
+    { label: "GitHub", href: "https://github.com/DevLuizHenrique" },
+    {
+      label: "LinkedIn",
+      href: "www.linkedin.com/in/luiz-henrique-ferreira-229b87263",
+    },
     { label: "Email", href: "#contact" },
   ],
   stats: [

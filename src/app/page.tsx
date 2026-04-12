@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import MapReveal from "@/presentation/components/map/MapReveal";
-import Footprints from "@/presentation/components/map/Footprints";
+import OwlFollower from "@/presentation/components/shared/OwlFollower";
 import Navigation from "@/presentation/components/layout/Navigation";
 import Footer from "@/presentation/components/layout/Footer";
 import HeroSection from "@/presentation/components/sections/HeroSection";
@@ -26,7 +26,7 @@ function PortfolioContent() {
 
       {revealed && (
         <>
-          <Footprints />
+          <OwlFollower />
           <Navigation />
           <main>
             <HeroSection />

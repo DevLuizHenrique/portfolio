@@ -33,6 +33,10 @@ const BLEED_MS = 500;
 const BASE_STRIDE = 40;
 const STRIDE_WIDTH = 6;
 const PATH_BUFFER_SIZE = 12;
+const MAX_STEPS_PER_MOVE = 3;
+const MAX_STEPS_PER_FRAME = 2;
+const FOOTPRINT_ALPHA = 0.36;
+const SMOOTH_ANGLE_LERP = 0.18;
 
 // ── Easing helpers ─────────────────────────────────────
 
@@ -66,12 +70,12 @@ function drawFoot(
   // Alpha: quick appear, very slow fade
   let alpha: number;
   if (age < BLEED_MS) {
-    alpha = 0.5 * bleed;
+    alpha = FOOTPRINT_ALPHA * bleed;
   } else {
     const fadeT = (age - BLEED_MS) / (LIFETIME - BLEED_MS);
-    alpha = 0.5 * (1 - easeInQuad(fadeT));
+    alpha = FOOTPRINT_ALPHA * (1 - easeInQuad(fadeT));
   }
-  if (alpha <= 0.005) return;
+  if (alpha <= 0.01) return;
 
   const scale = 0.8 + 0.2 * bleed;
 
@@ -186,6 +190,7 @@ export default function Footprints() {
     path: [] as Vec2[],              // recent mouse positions
     accDist: 0,                      // accumulated distance since last step
     lastStep: { x: 0, y: 0 },       // where the last step was placed
+    latestMouse: { x: 0, y: 0 },    // last seen mouse position (consumed by render loop)
     smoothAngle: 0,
     isLeft: true,
     lastTime: 0,
@@ -232,6 +237,9 @@ export default function Footprints() {
           const s = state.current;
           s.prints.forEach((p) => (p.createdAt += elapsed));
           s.drops.forEach((d) => (d.createdAt += elapsed));
+          // Reset path/initialization so a single large mouse jump doesn't place many steps
+          s.path = [];
+          s.initialized = false;
           paused = false;
         }
         state.current.animFrame = requestAnimationFrame(render);
@@ -246,6 +254,25 @@ export default function Footprints() {
       const now = Date.now();
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
+      // Incremental step placement (frame-driven) - consumes latestMouse
+      if (s.initialized) {
+        const mx = s.latestMouse.x;
+        const my = s.latestMouse.y;
+        const dx = mx - s.lastStep.x;
+        const dy = my - s.lastStep.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist >= BASE_STRIDE) {
+          const dirX = dx / dist;
+          const dirY = dy / dist;
+          const toPlace = Math.min(Math.floor(dist / BASE_STRIDE), MAX_STEPS_PER_FRAME);
+          for (let i = 0; i < toPlace; i++) {
+            const sx = s.lastStep.x + dirX * BASE_STRIDE;
+            const sy = s.lastStep.y + dirY * BASE_STRIDE;
+            placeStep(sx, sy);
+          }
+        }
+      }
+
       // Prune expired
       s.prints = s.prints.filter((p) => now - p.createdAt < LIFETIME);
       s.drops = s.drops.filter((d) => now - d.createdAt < DROP_LIFETIME);
@@ -256,7 +283,12 @@ export default function Footprints() {
 
       s.animFrame = requestAnimationFrame(render);
     };
-    state.current.animFrame = requestAnimationFrame(render);
+    let startTimeout: ReturnType<typeof setTimeout> | null = null;
+    startTimeout = setTimeout(() => {
+      // Start render loop and attach mouse listener after a short delay to avoid heavy work during the reveal transition
+      state.current.animFrame = requestAnimationFrame(render);
+      window.addEventListener("mousemove", onMove, { passive: true });
+    }, 120);
 
     // ── Average direction from path buffer ─────────
     const getPathAngle = (): number => {
@@ -285,17 +317,17 @@ export default function Footprints() {
     const placeStep = (x: number, y: number) => {
       const s = state.current;
       const angle = getPathAngle();
-      s.smoothAngle = lerpAngle(s.smoothAngle, angle, 0.5);
+      s.smoothAngle = lerpAngle(s.smoothAngle, angle, SMOOTH_ANGLE_LERP);
 
       const side = s.isLeft ? -1 : 1;
       const perp = s.smoothAngle - Math.PI / 2;
       const ox = Math.cos(perp) * STRIDE_WIDTH * side;
       const oy = Math.sin(perp) * STRIDE_WIDTH * side;
 
-      // Organic jitter
-      const jx = (Math.random() - 0.5) * 2.5;
-      const jy = (Math.random() - 0.5) * 2.5;
-      const ja = (Math.random() - 0.5) * 0.12;
+      // Organic jitter (subtle)
+      const jx = (Math.random() - 0.5) * 1.2;
+      const jy = (Math.random() - 0.5) * 1.2;
+      const ja = (Math.random() - 0.5) * 0.06;
 
       const now = Date.now();
       s.seedCounter++;
@@ -332,6 +364,9 @@ export default function Footprints() {
       const mx = e.clientX;
       const my = e.clientY;
 
+      // Update latest mouse position for render loop
+      s.latestMouse = { x: mx, y: my };
+
       if (!s.initialized) {
         s.lastStep = { x: mx, y: my };
         s.path = [{ x: mx, y: my }];
@@ -339,39 +374,19 @@ export default function Footprints() {
         return;
       }
 
-      // Add to path buffer
+      // Maintain path buffer for smoother angle computation
       s.path.push({ x: mx, y: my });
       if (s.path.length > PATH_BUFFER_SIZE) {
         s.path.shift();
       }
-
-      // Accumulate distance from last step position
-      const dx = mx - s.lastStep.x;
-      const dy = my - s.lastStep.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      // When enough distance accumulated, interpolate step positions along path
-      if (dist >= BASE_STRIDE) {
-        // How many steps fit in this distance
-        const steps = Math.floor(dist / BASE_STRIDE);
-        const dirX = dx / dist;
-        const dirY = dy / dist;
-
-        for (let i = 1; i <= steps; i++) {
-          const t = (i * BASE_STRIDE) / dist;
-          const sx = s.lastStep.x + dx * t;
-          const sy = s.lastStep.y + dy * t;
-          placeStep(sx, sy);
-        }
-      }
     };
 
-    window.addEventListener("mousemove", onMove, { passive: true });
 
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("visibilitychange", onVisibility);
+      if (startTimeout) clearTimeout(startTimeout);
       cancelAnimationFrame(state.current.animFrame);
     };
   }, []);
@@ -380,7 +395,7 @@ export default function Footprints() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none"
-      style={{ mixBlendMode: "multiply", zIndex: 1 }}
+      style={{ mixBlendMode: "multiply", zIndex: 0 }}
     />
   );
 }
