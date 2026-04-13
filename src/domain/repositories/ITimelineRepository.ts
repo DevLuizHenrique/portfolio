@@ -1,5 +1,5 @@
 import type { TimelineEvent } from "../entities/TimelineEvent";
 
 export interface ITimelineRepository {
-  getAll(): TimelineEvent[];
+  getAll(): Promise<TimelineEvent[]>;
 }

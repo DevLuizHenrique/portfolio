@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfólio — Luiz Henrique
 
-## Getting Started
+Site pessoal construído com Next.js, TypeScript, Tailwind CSS e Framer Motion. Aplica Clean Architecture e princípios SOLID para manter camadas desacopladas e facilitar manutenção.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js 16 (App Router)
+- React 19
+- TypeScript 5
+- Tailwind CSS 4
+- Framer Motion
+- pnpm (recomendado)
+
+## Visão rápida
+
+Este repositório é um portfólio pessoal com seções: Hero, Sobre, Skills, Projetos e Contato. A camada de apresentação consome use cases através de hooks, garantindo separação clara entre UI e regras de negócio.
+
+## Estrutura do projeto
+
+```
+src/
+├── domain/          # Entidades, interfaces de repositórios e contratos de use cases
+├── application/     # Implementações dos use cases (regras de aplicação)
+├── infrastructure/  # Implementações concretas (repositorios, DI)
+└── presentation/    # UI (components, hooks, providers)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- DI: `src/infrastructure/di/container.ts` e `src/presentation/providers/ContainerProvider.tsx`.
+- Personalização de dados: `src/infrastructure/repositories/StaticPersonalInfoRepository.ts`.
+- Formulário de contato: `src/application/usecases/SendContactMessage.ts` + `LocalContactRepository` (stub em `src/infrastructure/repositories/LocalContactRepository.ts`). Substituir por implementação HTTP se necessário.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Princípios adotados
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Clean Architecture: dependências apontam para dentro; presentation → application → domain → infrastructure via abstrações.
+- SOLID: separação de responsabilidades, interfaces pequenas, inversão de dependência via container.
+- SSR/Hydration: componentes usam skeletons e `suppressHydrationWarning` quando necessário para evitar mismatch.
 
-## Learn More
+## Rodando localmente
 
-To learn more about Next.js, take a look at the following resources:
+Pré-requisitos: Node.js 18+ e pnpm (recomendado).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm install
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Acesse: http://localhost:3000
 
-## Deploy on Vercel
+Build:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm build
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Compatível com Vercel, Netlify ou qualquer plataforma que suporte Next.js.
+
+## Contribuição
+
+Sugestões e PRs são bem-vindos. Mantenha mudanças alinhadas com a arquitetura (preferência por alterar/estender interfaces e criar implementações, evitando acoplamento direto entre camadas).
+
+## Licença
+
+Arquivo LICENSE incluído no repositório.

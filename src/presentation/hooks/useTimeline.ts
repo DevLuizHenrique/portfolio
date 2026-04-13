@@ -1,10 +1,16 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
+import type { TimelineEvent } from "@/domain/entities/TimelineEvent";
 import { useContainer } from "../providers/ContainerProvider";
 
 export function useTimeline() {
   const { getTimeline } = useContainer();
+  const [data, setData] = useState<TimelineEvent[]>([]);
 
-  return useMemo(() => getTimeline.all(), [getTimeline]);
+  useEffect(() => {
+    getTimeline.all().then(setData);
+  }, [getTimeline]);
+
+  return data;
 }

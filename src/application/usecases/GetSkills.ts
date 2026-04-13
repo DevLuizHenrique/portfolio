@@ -1,14 +1,15 @@
 import type { ExtraSkill, SkillGroup } from "@/domain/entities/Skill";
 import type { ISkillRepository } from "@/domain/repositories/ISkillRepository";
+import type { IGetSkills } from "@/domain/usecases/IGetSkills";
 
-export class GetSkills {
+export class GetSkills implements IGetSkills {
   constructor(private readonly repository: ISkillRepository) {}
 
-  groups(): SkillGroup[] {
+  async groups(): Promise<SkillGroup[]> {
     return this.repository.getGroups();
   }
 
-  extras(): ExtraSkill[] {
+  async extras(): Promise<ExtraSkill[]> {
     return this.repository.getExtras();
   }
 }

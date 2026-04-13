@@ -1,7 +1,7 @@
 import type { Project } from "../entities/Project";
 
 export interface IProjectRepository {
-  getAll(): Project[];
-  getFeatured(): Project[];
-  getById(id: string): Project | undefined;
+  getAll(): Promise<Project[]>;
+  getFeatured(): Promise<Project[]>;
+  getById(id: string): Promise<Project | undefined>;
 }

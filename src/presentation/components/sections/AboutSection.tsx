@@ -4,12 +4,14 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionTitle from "../shared/SectionTitle";
 import { usePersonalInfo } from "@/presentation/hooks/usePersonalInfo";
+
 import { useTimeline } from "@/presentation/hooks/useTimeline";
 
 export default function AboutSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const info = usePersonalInfo();
+  const hookInfo = usePersonalInfo();
+  const info = hookInfo;
   const timeline = useTimeline();
 
   const visible = isInView || !!info;

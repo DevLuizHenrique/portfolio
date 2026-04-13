@@ -3,7 +3,7 @@ import type { ISkillRepository } from "@/domain/repositories/ISkillRepository";
 
 const SKILL_GROUPS: SkillGroup[] = [
   {
-    chamber: "Câmara do Front-End",
+    chamber: "Front-End",
     icon: "⬡",
     skills: [
       { name: "React / Next.js", level: 92, rune: "R" },
@@ -14,7 +14,7 @@ const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
-    chamber: "Câmara do Back-End",
+    chamber: "Back-End",
     icon: "⬢",
     skills: [
       { name: "Node.js", level: 88, rune: "N" },
@@ -25,7 +25,7 @@ const SKILL_GROUPS: SkillGroup[] = [
     ],
   },
   {
-    chamber: "Artes das Ferramentas",
+    chamber: "Ferramentas",
     icon: "⬟",
     skills: [
       { name: "Git / GitHub", level: 94, rune: "G" },
@@ -38,26 +38,17 @@ const SKILL_GROUPS: SkillGroup[] = [
 ];
 
 const EXTRA_SKILLS: ExtraSkill[] = [
-  { name: "Redis" },
-  { name: "MongoDB" },
-  { name: "Prisma" },
-  { name: "tRPC" },
-  { name: "Zod" },
-  { name: "Storybook" },
-  { name: "Webpack" },
-  { name: "Vite" },
-  { name: "Nx" },
-  { name: "Vercel" },
-  { name: "Linux" },
-  { name: "Bash" },
+  { name: "Redis" }, { name: "MongoDB" }, { name: "Prisma" }, { name: "tRPC" },
+  { name: "Zod" }, { name: "Storybook" }, { name: "Webpack" }, { name: "Vite" },
+  { name: "Nx" }, { name: "Vercel" }, { name: "Linux" }, { name: "Bash" },
 ];
 
 export class StaticSkillRepository implements ISkillRepository {
-  getGroups(): SkillGroup[] {
+  async getGroups(): Promise<SkillGroup[]> {
     return SKILL_GROUPS;
   }
 
-  getExtras(): ExtraSkill[] {
+  async getExtras(): Promise<ExtraSkill[]> {
     return EXTRA_SKILLS;
   }
 }

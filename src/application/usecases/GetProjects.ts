@@ -1,22 +1,24 @@
 import type { Project } from "@/domain/entities/Project";
 import type { IProjectRepository } from "@/domain/repositories/IProjectRepository";
+import type { IGetProjects } from "@/domain/usecases/IGetProjects";
 
-export class GetProjects {
+export class GetProjects implements IGetProjects {
   constructor(private readonly repository: IProjectRepository) {}
 
-  all(): Project[] {
+  async all(): Promise<Project[]> {
     return this.repository.getAll();
   }
 
-  featured(): Project[] {
+  async featured(): Promise<Project[]> {
     return this.repository.getFeatured();
   }
 
-  notFeatured(): Project[] {
-    return this.repository.getAll().filter((p) => !p.featured);
+  async notFeatured(): Promise<Project[]> {
+    const all = await this.repository.getAll();
+    return all.filter((p) => !p.featured);
   }
 
-  byId(id: string): Project | undefined {
+  async byId(id: string): Promise<Project | undefined> {
     return this.repository.getById(id);
   }
 }

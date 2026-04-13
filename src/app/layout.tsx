@@ -1,28 +1,19 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
 export const metadata: Metadata = {
-  title: "Mapa do Portfólio — I Solemnly Swear",
-  description: "Um portfólio mágico inspirado no Mapa do Maroto",
+  title: "Luiz Henrique — Full Stack Developer",
+  description: "Portfólio de Luiz Henrique, desenvolvedor full stack",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-full flex flex-col parchment-bg">
-        <div className="noise-overlay" />
+    <html lang="pt-BR" className={`h-full antialiased ${geistSans.variable} ${geistMono.variable}`}>
+      <body className="min-h-full flex flex-col">
         {children}
       </body>
     </html>
