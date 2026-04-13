@@ -3,7 +3,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import SectionTitle from "../shared/SectionTitle";
-import CornerOrnaments from "../shared/CornerOrnaments";
 import { usePersonalInfo } from "@/presentation/hooks/usePersonalInfo";
 import { useTimeline } from "@/presentation/hooks/useTimeline";
 
@@ -13,111 +12,55 @@ export default function AboutSection() {
   const info = usePersonalInfo();
   const timeline = useTimeline();
 
+  const visible = isInView || !!info;
+
   return (
     <section id="about" className="py-24 px-6" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        <SectionTitle number="I" title="Câmara do Início" subtitle="A Origem do Cartógrafo" />
+      <div className="max-w-4xl mx-auto">
+        <SectionTitle number="01" title="Sobre" subtitle="Um pouco sobre mim" />
 
-        <div className="grid md:grid-cols-2 gap-16 mt-16">
-          {/* Bio */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="map-card p-8">
-              <CornerOrnaments />
-              <h3
-                className="font-cinzel text-xl mb-6 pb-3"
-                style={{ fontFamily: "Cinzel, serif", color: "#5c3317", borderBottom: "1px solid rgba(139,105,20,0.4)" }}
-              >
-                O Cartógrafo
-              </h3>
-
-              <div className="space-y-4 font-fell leading-relaxed" style={{ fontFamily: "IM Fell English, Georgia, serif", color: "#3d2010" }}>
-                {info.bio.map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
+        {info ? (
+          <div className="grid md:grid-cols-2 gap-16">
+            <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ duration: 0.6 }}>
+              <div className="space-y-4 text-sm leading-relaxed text-[var(--muted)]">
+                {info.bio.map((p, i) => <p key={i}>{p}</p>)}
               </div>
 
-              <div className="mt-6 flex gap-4">
+              <div className="flex gap-6 mt-8">
                 {info.socialLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    className="text-xs tracking-[0.15em] uppercase transition-colors hover:!text-[#5c3317]"
-                    style={{ fontFamily: "Cinzel, serif", color: "#8b6914" }}
-                  >
+                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--dim)] hover:text-[var(--accent)] transition-colors">
                     {link.label}
                   </a>
                 ))}
               </div>
-            </div>
 
-            <div className="grid grid-cols-3 gap-4 mt-6">
-              {info.stats.map((stat) => (
-                <div key={stat.label} className="map-card p-4 text-center">
-                  <div className="text-3xl font-bold mb-1" style={{ fontFamily: "Cinzel, serif", color: "#5c3317" }}>
-                    {stat.value}
+              <div className="flex gap-10 mt-10 pt-8 border-t border-[var(--border)]">
+                {info.stats.map((s) => (
+                  <div key={s.label}>
+                    <div className="text-lg font-semibold text-[var(--foreground)]">{s.value}</div>
+                    <div className="text-[10px] text-[var(--dim)] mt-0.5" style={{ whiteSpace: "pre-line" }}>{s.label}</div>
                   </div>
-                  <div
-                    className="text-xs leading-tight"
-                    style={{ fontFamily: "IM Fell English, serif", color: "#8b6914", whiteSpace: "pre-line" }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                ))}
+              </div>
+            </motion.div>
 
-          {/* Timeline */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <h3 className="text-sm tracking-[0.25em] uppercase mb-8" style={{ fontFamily: "Cinzel, serif", color: "#8b6914" }}>
-              — Linha do Tempo —
-            </h3>
-
-            <div className="relative">
-              <div
-                className="absolute left-[22px] top-0 bottom-0 w-px"
-                style={{ background: "linear-gradient(to bottom, transparent, #8b6914 10%, #8b6914 90%, transparent)" }}
-              />
-
+            <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.2 }}>
               <div className="space-y-6">
                 {timeline.map((item, i) => (
-                  <motion.div
-                    key={item.year}
-                    className="flex gap-6"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                  >
-                    <div className="relative flex-shrink-0">
-                      <div
-                        className="w-11 h-11 flex items-center justify-center text-xs font-bold relative z-10"
-                        style={{ fontFamily: "Cinzel, serif", backgroundColor: "#f0e6c8", border: "1px solid #8b6914", color: "#5c3317" }}
-                      >
-                        {item.year.slice(2)}
-                      </div>
-                    </div>
-                    <div className="pb-4">
-                      <h4 className="text-sm mb-1" style={{ fontFamily: "Cinzel, serif", color: "#2c1810" }}>
-                        {item.title}
-                      </h4>
-                      <p className="text-sm leading-relaxed" style={{ fontFamily: "IM Fell English, Georgia, serif", color: "#6b4c2a" }}>
-                        {item.description}
-                      </p>
+                  <motion.div key={item.year} className="flex gap-5" initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ duration: 0.3, delay: 0.3 + i * 0.06 }}>
+                    <span className="text-[10px] font-mono text-[var(--dim)] pt-1 w-8 shrink-0">{item.year}</span>
+                    <div>
+                      <h4 className="text-sm text-[var(--foreground)]">{item.title}</h4>
+                      <p className="text-xs text-[var(--dim)] mt-0.5">{item.description}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
+        ) : (
+          <div className="h-40 bg-transparent" />
+        )}
       </div>
     </section>
   );
