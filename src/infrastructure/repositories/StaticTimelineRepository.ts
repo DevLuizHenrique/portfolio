@@ -2,12 +2,12 @@ import type { TimelineEvent } from "@/domain/entities/TimelineEvent";
 import type { ITimelineRepository } from "@/domain/repositories/ITimelineRepository";
 
 const TIMELINE: TimelineEvent[] = [
-  { year: "2019", title: "Início da Jornada", description: "Primeiros passos com HTML e CSS. A paixão por código começou." },
-  { year: "2020", title: "Mergulho no JavaScript", description: "JavaScript e React entraram no repertório. Primeiros projetos freelance." },
-  { year: "2021", title: "Full Stack", description: "Node.js, bancos de dados e arquitetura full stack descobertos." },
-  { year: "2022", title: "Qualidade & Padrões", description: "TypeScript, testes e boas práticas tornaram-se parte do dia a dia." },
-  { year: "2023", title: "Liderança Técnica", description: "Liderança técnica, arquitetura de sistemas e mentoria de equipes." },
-  { year: "2024", title: "IA & Inovação", description: "IA, agentes e o futuro do desenvolvimento integrado ao fluxo de trabalho." },
+  { year: "Hoje", title: "Atuação atual", description: "Desenvolvedor Full Stack Pleno com foco principal em Frontend, atuando profissionalmente em contexto corporativo." },
+  { year: "Foco", title: "Especialidade", description: "Maior domínio em React.js, Next.js, JavaScript e TypeScript, com direcionamento para vagas de Frontend e Full Stack." },
+  { year: "Impacto", title: "Resultado entregue", description: "Participação na entrega de um sistema interno para digitação de documentos com foco em faturamento hospitalar, contribuindo para mais de 87% de ganho de produtividade." },
+  { year: "Stack", title: "Evolução técnica", description: "Aprimoramento contínuo em arquitetura, componentização, integrações com APIs e aprofundamento prático em Go (Golang)." },
+  { year: "Form.", title: "Formação", description: "Ensino superior em andamento, com desenvolvimento contínuo por meio de prática profissional, projetos e estudos complementares." },
+  { year: "Perfil", title: "Modelo e idiomas", description: "Base em Pato Branco - PR, preferência por trabalho remoto e comunicação em português nativo com inglês técnico/básico." },
 ];
 
 export class StaticTimelineRepository implements ITimelineRepository {

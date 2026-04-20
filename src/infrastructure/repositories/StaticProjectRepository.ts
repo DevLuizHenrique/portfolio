@@ -3,80 +3,90 @@ import type { IProjectRepository } from "@/domain/repositories/IProjectRepositor
 
 const PROJECTS: Project[] = [
   {
-    id: "projeto-alpha",
-    title: "Projeto Alpha",
+    id: "projeto-pdv-elektron",
+    title: "PDV-Elektron",
     room: "Full Stack",
-    description: "Uma plataforma de gestão full stack construída com Next.js e PostgreSQL. Autenticação robusta, dashboard em tempo real e API RESTful completa.",
-    tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
-    year: "2024",
+    description:
+      "MVP de sistema de Ponto de Venda desktop com Electron, React e TypeScript, integrado a backend em Go com SQLite para cadastro de produtos, registro de vendas e geração de arquivos ESC/POS para impressão térmica.",
+    tags: [
+      "Electron",
+      "React",
+      "TypeScript",
+      "Go",
+      "SQLite",
+      "GORM",
+      "TailwindCSS",
+      "shadcn/ui",
+      "REST API",
+      "ESC/POS",
+    ],
+    year: "2026",
     status: "Completo",
-    href: "#",
+    href: "https://github.com/DevLuizHenrique/PDV-Elekton",
     featured: true,
   },
   {
-    id: "projeto-beta",
-    title: "Projeto Beta",
-    room: "E-commerce",
-    description: "Sistema de e-commerce com pagamentos integrados, carrinho em tempo real via WebSocket e painel administrativo completo.",
-    tags: ["React", "Node.js", "Redis", "Stripe"],
+    id: "projeto-next-sonarqube",
+    title: "Anotar Pedido Landing Page",
+    room: "Frontend",
+    description:
+      "Landing page desenvolvida com Next.js e TypeScript, estruturada com pipeline CI/CD no GitHub Actions e análise estática via SonarQube para manter qualidade, previsibilidade de entrega e evolução contínua.",
+    tags: ["Next.js", "TypeScript", "GitHub Actions", "SonarQube", "CI/CD"],
+    year: "2025",
+    status: "Em Desenvolvimento",
+    accessLabel: "Projeto privado",
+    featured: true,
+    private: true,
+  },
+  {
+    id: "projeto-volkar-online",
+    title: "Volkar Online Web Client",
+    room: "Frontend / SaaS",
+    description:
+      "Cliente web para e-commerce SaaS desenvolvido com Next.js e TypeScript, com SSR e SSG para performance, interface responsiva e foco em experiência de navegação e escalabilidade do produto.",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "TailwindCSS",
+      "shadcn/ui",
+      "SSR",
+      "SSG",
+      "SaaS",
+    ],
+    year: "2025",
+    status: "Completo",
+    accessLabel: "Código privado",
+    featured: true,
+    private: true,
+  },
+  {
+    id: "sistema-faturamento-hospitalar",
+    title: "Sistema de Auditoria e Faturamento Hospitalar",
+    room: "Frontend",
+    description:
+      "Atuação no desenvolvimento de um sistema corporativo para digitação de documentos e faturamento hospitalar, com automação de regras, validação de inconsistências e dashboards estratégicos. A entrega contribuiu para mais de 87% de ganho de produtividade no processo.",
+    tags: [
+      "React.js",
+      "TypeScript",
+      "Zod",
+      "React Hook Form",
+      "Apache Echarts",
+      "Automação de Regras",
+      "Validação de Dados",
+      "Relatórios",
+    ],
     year: "2024",
     status: "Em Produção",
-    href: "#",
+    href: "https://sinnc.pages.dev/",
+    accessLabel: "Ver plataforma",
+    private: true,
     featured: true,
-  },
-  {
-    id: "projeto-gamma",
-    title: "Projeto Gamma",
-    room: "Data Viz",
-    description: "Ferramenta de visualização de dados com gráficos interativos, filtros dinâmicos e exportação em múltiplos formatos.",
-    tags: ["Vue.js", "D3.js", "Python", "FastAPI"],
-    year: "2023",
-    status: "Completo",
-    href: "#",
-    featured: false,
-  },
-  {
-    id: "projeto-delta",
-    title: "Projeto Delta",
-    room: "Mobile",
-    description: "Aplicação mobile-first para gerenciamento de tarefas com sincronização offline e notificações push.",
-    tags: ["React Native", "Expo", "Supabase"],
-    year: "2023",
-    status: "Completo",
-    href: "#",
-    featured: false,
-  },
-  {
-    id: "projeto-epsilon",
-    title: "Projeto Epsilon",
-    room: "DevOps",
-    description: "CLI de automação de deploy e gerenciamento de infraestrutura para times pequenos com integração GitHub Actions.",
-    tags: ["Node.js", "Docker", "GitHub Actions", "Bash"],
-    year: "2023",
-    status: "Open Source",
-    href: "#",
-    featured: false,
-  },
-  {
-    id: "projeto-zeta",
-    title: "Projeto Zeta",
-    room: "AI / ML",
-    description: "Chatbot com IA integrada para suporte ao cliente, usando embeddings vetoriais e RAG para respostas contextuais.",
-    tags: ["Next.js", "OpenAI", "Pinecone", "Langchain"],
-    year: "2024",
-    status: "Em Desenvolvimento",
-    href: "#",
-    featured: false,
   },
 ];
 
 export class StaticProjectRepository implements IProjectRepository {
   async getAll(): Promise<Project[]> {
     return PROJECTS;
-  }
-
-  async getFeatured(): Promise<Project[]> {
-    return PROJECTS.filter((p) => p.featured);
   }
 
   async getById(id: string): Promise<Project | undefined> {

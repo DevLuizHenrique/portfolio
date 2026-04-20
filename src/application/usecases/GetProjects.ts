@@ -9,15 +9,6 @@ export class GetProjects implements IGetProjects {
     return this.repository.getAll();
   }
 
-  async featured(): Promise<Project[]> {
-    return this.repository.getFeatured();
-  }
-
-  async notFeatured(): Promise<Project[]> {
-    const all = await this.repository.getAll();
-    return all.filter((p) => !p.featured);
-  }
-
   async byId(id: string): Promise<Project | undefined> {
     return this.repository.getById(id);
   }

@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import type { ContactMessage } from "@/domain/entities/ContactMessage";
-import { useContainer } from "../providers/ContainerProvider";
+import type { ContactMessage, ContactResult } from "@/domain/entities/ContactMessage";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
 export function useContactForm() {
-  const { sendContactMessage } = useContainer();
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState<string>();
 
@@ -16,16 +14,29 @@ export function useContactForm() {
       setState("sending");
       setError(undefined);
 
-      const result = await sendContactMessage.execute(message);
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message),
+        });
+        const result: ContactResult = await response.json();
 
-      if (result.success) {
+        if (!response.ok || !result.success) {
+          setState("error");
+          setError(result.error ?? "Não foi possível enviar sua mensagem agora.");
+          return;
+        }
+
         setState("success");
-      } else {
+      } catch {
         setState("error");
-        setError(result.error);
+        setError("Não foi possível enviar sua mensagem agora.");
       }
     },
-    [sendContactMessage],
+    [],
   );
 
   return { state, error, send };

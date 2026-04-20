@@ -8,6 +8,8 @@ export interface Project {
   readonly tags: readonly string[];
   readonly year: string;
   readonly status: ProjectStatus;
-  readonly href: string;
+  readonly href?: string;
+  readonly accessLabel?: string;
+  readonly private?: boolean;
   readonly featured: boolean;
 }

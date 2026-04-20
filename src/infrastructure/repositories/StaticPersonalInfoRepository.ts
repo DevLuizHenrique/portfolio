@@ -2,27 +2,51 @@ import type { PersonalInfo } from "@/domain/entities/PersonalInfo";
 import type { IPersonalInfoRepository } from "@/domain/repositories/IPersonalInfoRepository";
 
 const PERSONAL_INFO: PersonalInfo = {
-  name: "Luiz Henrique",
-  role: "Desenvolvedor Full Stack",
+  name: "Luiz Henrique Ferreira",
+  role: "Desenvolvedor Frontend / Full Stack Pleno",
   bio: [
-    "Sou um desenvolvedor full stack apaixonado por transformar ideias complexas em experiências digitais elegantes. Meu trabalho é encontrar o caminho mais claro entre o problema e a solução.",
-    "Com anos de experiência em front-end e back-end, construo aplicações que não apenas funcionam — mas que encantam quem as usa. Cada projeto é uma oportunidade de criar algo que faz a diferença.",
-    "Quando não estou codificando, estou explorando novas tecnologias, contribuindo para projetos open source ou compartilhando conhecimento com a comunidade dev.",
+    "Sou desenvolvedor Pleno com foco em Frontend e atuação Full Stack, construindo aplicações web com React, Next.js, JavaScript e TypeScript para produtos reais e ambientes corporativos.",
+    "Minha experiência recente inclui o desenvolvimento de um sistema interno para digitação de documentos com fins de faturamento hospitalar, contribuindo para um ganho real de mais de 87% de produtividade no fluxo operacional.",
+    "Tenho perfil orientado a produto, usabilidade e organização de código, além de seguir ampliando minha atuação full stack com estudos e projetos em Go (Golang).",
   ],
   socialLinks: [
     { label: "GitHub", href: "https://github.com/DevLuizHenrique" },
-    { label: "LinkedIn", href: "www.linkedin.com/in/luiz-henrique-ferreira-229b87263" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/luiz-henrique-ferreira-229b87263",
+    },
     { label: "Currículo", href: "/curriculo.html" },
   ],
   stats: [
-    { value: "5+", label: "Anos de\nExperiência" },
-    { value: "30+", label: "Projetos\nEntregues" },
-    { value: "10+", label: "Tecnologias\nDominadas" },
+    { value: "Pleno", label: "Atuação\nAtual" },
+    { value: "+87%", label: "Ganho de\nProdutividade" },
+    { value: "React / Next.js", label: "Foco\nPrincipal" },
   ],
   contactChannels: [
-    { icon: "✉", label: "E-mail", value: "luiz@exemplo.com", href: "mailto:luiz@exemplo.com" },
-    { icon: "⚡", label: "GitHub", value: "github.com/DevLuizHenrique", href: "https://github.com/DevLuizHenrique" },
-    { icon: "💼", label: "LinkedIn", value: "linkedin.com/in/luizhenrique", href: "https://www.linkedin.com/in/luiz-henrique-ferreira-229b87263" },
+    {
+      icon: "✉",
+      label: "E-mail",
+      value: "lhpf95@gmail.com",
+      href: "mailto:lhpf95@gmail.com",
+    },
+    {
+      icon: "☎",
+      label: "WhatsApp",
+      value: "(46) 99139-7534",
+      href: "https://wa.me/5546991397534",
+    },
+    {
+      icon: "⚡",
+      label: "GitHub",
+      value: "github.com/DevLuizHenrique",
+      href: "https://github.com/DevLuizHenrique",
+    },
+    {
+      icon: "💼",
+      label: "LinkedIn",
+      value: "linkedin.com/in/luiz-henrique-ferreira-229b87263",
+      href: "https://www.linkedin.com/in/luiz-henrique-ferreira-229b87263",
+    },
   ],
 };
 

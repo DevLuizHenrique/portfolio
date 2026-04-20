@@ -1,5 +1,5 @@
 import type { ContactMessage, ContactResult } from "../entities/ContactMessage";
 
-export interface IContactRepository {
+export interface IContactMessageGateway {
   send(message: ContactMessage): Promise<ContactResult>;
 }

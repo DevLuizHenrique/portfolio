@@ -7,21 +7,21 @@ const SKILL_GROUPS: SkillGroup[] = [
     icon: "⬡",
     skills: [
       { name: "React / Next.js", level: 92, rune: "R" },
+      { name: "JavaScript (ES6+)", level: 90, rune: "J" },
       { name: "TypeScript", level: 88, rune: "T" },
       { name: "Tailwind CSS", level: 90, rune: "W" },
-      { name: "Framer Motion", level: 78, rune: "M" },
-      { name: "Vue.js", level: 72, rune: "V" },
+      { name: "TanStack Query", level: 75, rune: "Q" },
     ],
   },
   {
     chamber: "Back-End",
     icon: "⬢",
     skills: [
-      { name: "Node.js", level: 88, rune: "N" },
-      { name: "Python", level: 80, rune: "P" },
+      { name: "Node.js", level: 80, rune: "N" },
+      { name: "TypeScript (Backend)", level: 85, rune: "T" },
       { name: "PostgreSQL", level: 85, rune: "D" },
       { name: "REST / GraphQL", level: 82, rune: "G" },
-      { name: "Docker", level: 75, rune: "K" },
+      { name: "Go (Golang)", level: 75, rune: "G" },
     ],
   },
   {
@@ -29,18 +29,24 @@ const SKILL_GROUPS: SkillGroup[] = [
     icon: "⬟",
     skills: [
       { name: "Git / GitHub", level: 94, rune: "G" },
-      { name: "CI/CD", level: 78, rune: "C" },
-      { name: "AWS / Cloud", level: 70, rune: "A" },
-      { name: "Figma / Design", level: 74, rune: "F" },
+      { name: "CI/CD", level: 70, rune: "C" },
+      { name: "Docker", level: 70, rune: "K" },
+      { name: "Figma / Design", level: 72, rune: "F" },
       { name: "Testes (Jest / Vitest)", level: 80, rune: "J" },
     ],
   },
 ];
 
 const EXTRA_SKILLS: ExtraSkill[] = [
-  { name: "Redis" }, { name: "MongoDB" }, { name: "Prisma" }, { name: "tRPC" },
-  { name: "Zod" }, { name: "Storybook" }, { name: "Webpack" }, { name: "Vite" },
-  { name: "Nx" }, { name: "Vercel" }, { name: "Linux" }, { name: "Bash" },
+  { name: "Clean Architecture" },
+  { name: "Performance Optimization" },
+  { name: "MongoDB" },
+  { name: "Prisma" },
+  { name: "Zod" },
+  { name: "Vite" },
+  { name: "Vercel" },
+  { name: "Linux" },
+  { name: "Bash" },
 ];
 
 export class StaticSkillRepository implements ISkillRepository {
